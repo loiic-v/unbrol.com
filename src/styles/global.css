@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-graphite: #121212;
+  --color-bone: #f5f5f4;
+  --color-volt: #e2ff00;
+  --color-silver: #9ca3af;
+  --color-grid-line: #262626;
+
+  --font-sans-heavy: "Archivo Black", sans-serif;
+  --font-serif-human: "Newsreader", serif;
+  --font-mono-machine: "JetBrains Mono", monospace;
+}
+
+@utility bg-micro-dots {
+  background-image: radial-gradient(
+    var(--color-grid-line) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* Base styles for the project */
+body {
+  background-color: var(--color-graphite);
+  color: var(--color-bone);
+  font-family: var(--font-serif-human);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utility to ensure volt text is on black/graphite */
+.text-volt-on-black {
+  color: var(--color-volt);
+  background-color: var(--color-graphite); /* or black */
+}
