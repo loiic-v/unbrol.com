@@ -1,10 +1,20 @@
 ---
+
 ---
-<label for="toggle-mode" class="mode-toggle-root fixed top-4 left-1/2 -translate-x-1/2 z-50 cursor-pointer group">
-  <div class="relative flex items-center bg-graphite border border-grid-line rounded-full p-1 gap-4 px-4 shadow-xl backdrop-blur-md">
+
+<label
+  for="toggle-mode"
+  class="mode-toggle-root fixed top-4 left-1/2 -translate-x-1/2 z-50 cursor-pointer group"
+>
+  <div
+    class="relative flex items-center bg-graphite border border-grid-line rounded-full p-1 gap-4 px-4 shadow-xl backdrop-blur-md"
+  >
     <!-- Sliding Background (Indicator) -->
-    <div class="toggle-indicator absolute left-1 top-1 bottom-1 w-[calc(50%-2px)] bg-grid-line/50 rounded-full transition-all duration-300"></div>
-    
+    <div
+      class="toggle-indicator absolute left-1 top-1 bottom-1 w-[calc(50%-2px)] bg-grid-line/50 rounded-full transition-all duration-300"
+    >
+    </div>
+
     <style>
       /* While #toggle-mode is checked (machine mode), move the indicator */
       /* Note: The label (.mode-toggle-root) is a sibling of the input #toggle-mode in Layout */
@@ -12,7 +22,7 @@
         transform: translateX(100%);
         background-color: var(--color-volt);
       }
-      
+
       /* Text colors */
       :global(#toggle-mode:checked) ~ .mode-toggle-root .text-machine {
         color: #000;
@@ -22,8 +32,16 @@
       }
     </style>
 
-    <div class="relative z-10 font-mono-machine text-xs font-bold transition-colors duration-300 text-human text-silver text-xs tracking-wider">HUMAN</div>
+    <div
+      class="relative z-10 font-mono-machine text-xs font-bold transition-colors duration-300 text-human text-silver tracking-wider"
+    >
+      HUMAN
+    </div>
     <div class="w-px h-3 bg-grid-line"></div>
-    <div class="relative z-10 font-mono-machine text-xs font-bold transition-colors duration-300 text-machine text-silver text-xs tracking-wider">MACHINE</div>
+    <div
+      class="relative z-10 font-mono-machine text-xs font-bold transition-colors duration-300 text-machine text-silver tracking-wider"
+    >
+      MACHINE
+    </div>
   </div>
 </label>

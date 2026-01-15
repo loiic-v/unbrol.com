@@ -1,16 +1,15 @@
 ---
-import { data } from '../data/content';
+import { data } from "../data/content";
 ---
 
 <div class="max-w-4xl mx-auto py-24">
   <div class="mb-8 opacity-50 text-xs">
-    // SYSTEM DUMP <br/>
-    // SOURCE: UNBROL_CORE <br/>
+    // SYSTEM DUMP <br />
+    // SOURCE: UNBROL_CORE <br />
     // TIMESTAMP: {new Date().toISOString()}
   </div>
-  <pre class="whitespace-pre-wrap break-words text-sm md:text-base selection:bg-green-900 selection:text-white"><code>{JSON.stringify(data, null, 2)}</code></pre>
-  
-  <div class="mt-12 opacity-50 text-xs animate-pulse">
-    _CURSOR_ACTIVE
-  </div>
+  <pre
+    class="whitespace-pre-wrap wrap-break-word text-sm md:text-base selection:bg-green-900 selection:text-white"><code>{JSON.stringify(data, null, 2)}</code></pre>
+
+  <div class="mt-12 opacity-50 text-xs animate-pulse">_CURSOR_ACTIVE</div>
 </div>

@@ -1,82 +1,94 @@
 ---
+
 ---
-<div id="custom-cursor" class="fixed top-0 left-0 w-4 h-4 rounded-full bg-volt pointer-events-none z-[9999] mix-blend-exclusion translate-x-[-50%] translate-y-[-50%] opacity-0 transition-colors duration-300"></div>
+
+<div
+  id="custom-cursor"
+  class="fixed top-0 left-0 w-4 h-4 rounded-full bg-volt pointer-events-none z-9999 mix-blend-exclusion translate-x-[-50%] translate-y-[-50%] opacity-0 transition-colors duration-300"
+>
+</div>
 
 <script>
   if (window.matchMedia("(pointer: fine)").matches) {
-    const cursor = document.getElementById('custom-cursor');
-    
+    const cursor = document.getElementById("custom-cursor");
+
     let mouseX = 0;
     let mouseY = 0;
     let cursorX = 0;
     let cursorY = 0;
-    
+
     // Scale Physics
     let currentScale = 1;
     let targetScale = 1;
 
     // Show cursor on first move
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      if (cursor) {
-        cursor.style.opacity = '1';
-      }
-    }, { once: true });
+    document.addEventListener(
+      "mousemove",
+      (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (cursor) {
+          cursor.style.opacity = "1";
+        }
+      },
+      { once: true }
+    );
 
     // Track mouse
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener("mousemove", (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
     });
 
     // Handle hover states
-    const interactiveSelectors = 'a, button, input, textarea, label, [role="button"], .cursor-target';
-    
-    const updateInteractiveElements = () => {
-       const interactiveElements = document.querySelectorAll(interactiveSelectors);
-       interactiveElements.forEach(el => {
-        // Prevent adding listeners multiple times if called again (though here it runs once)
-        if (el.getAttribute('data-cursor-attached')) return;
-        el.setAttribute('data-cursor-attached', 'true');
+    const interactiveSelectors =
+      'a, button, input, textarea, label, [role="button"], .cursor-target';
 
-        el.addEventListener('mouseenter', () => {
-            targetScale = 9; // Significantly larger for dramatic effect
-            cursor?.classList.add('mix-blend-difference', 'bg-white');
-            cursor?.classList.remove('bg-volt', 'mix-blend-exclusion');
+    const updateInteractiveElements = () => {
+      const interactiveElements =
+        document.querySelectorAll(interactiveSelectors);
+      interactiveElements.forEach((el) => {
+        // Prevent adding listeners multiple times if called again (though here it runs once)
+        if (el.getAttribute("data-cursor-attached")) return;
+        el.setAttribute("data-cursor-attached", "true");
+
+        el.addEventListener("mouseenter", () => {
+          targetScale = 9; // Significantly larger for dramatic effect
+          cursor?.classList.add("mix-blend-difference", "bg-white");
+          cursor?.classList.remove("bg-volt", "mix-blend-exclusion");
         });
-        el.addEventListener('mouseleave', () => {
-            targetScale = 1;
-            cursor?.classList.remove('mix-blend-difference', 'bg-white');
-            cursor?.classList.add('bg-volt', 'mix-blend-exclusion');
+        el.addEventListener("mouseleave", () => {
+          targetScale = 1;
+          cursor?.classList.remove("mix-blend-difference", "bg-white");
+          cursor?.classList.add("bg-volt", "mix-blend-exclusion");
         });
       });
-    }
-    
+    };
+
     // Run initially
     updateInteractiveElements();
-    
+
     // Smooth animation loop
     function animate() {
       if (!cursor) return;
-      
+
       // Position Lerp
       const dx = mouseX - cursorX;
       const dy = mouseY - cursorY;
       cursorX += dx * 0.15;
       cursorY += dy * 0.15;
-      
+
       // Scale Lerp
       const ds = targetScale - currentScale;
       currentScale += ds * 0.1;
 
       cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%) scale(${currentScale})`;
-      
+
       requestAnimationFrame(animate);
     }
-    
+
     animate();
-    
+
     // Removed cursor hiding logic to keep default cursor visible
   }
 </script>

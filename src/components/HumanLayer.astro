@@ -1,18 +1,20 @@
 ---
-import Navigation from './Navigation.astro';
-import Hero from './Hero.astro';
-import Services from './Services.astro';
-import { data } from '../data/content'; 
+import Navigation from "./Navigation.astro";
+import Hero from "./Hero.astro";
+import Services from "./Services.astro";
+import { data } from "../data/content";
 ---
 
 <div class="min-h-screen flex flex-col selection:bg-volt selection:text-black">
   <Navigation />
-  <main class="flex-grow">
+  <main class="grow">
     <Hero />
     <Services />
-    
+
     <!-- Footer could be here or just a simple copyright -->
-    <footer class="p-6 border-t border-grid-line font-mono-machine text-xs text-silver text-center uppercase tracking-widest">
+    <footer
+      class="p-6 border-t border-grid-line font-mono-machine text-xs text-silver text-center uppercase tracking-widest"
+    >
       &copy; UNBRØL {new Date().getFullYear()}. BRUSSELS.
     </footer>
   </main>

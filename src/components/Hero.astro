@@ -1,15 +1,19 @@
 ---
-import { data } from '../data/content';
-const { status, location, established, reboot } = data.metadata;
+import { data } from "../data/content";
+const { status, established, reboot } = data.metadata;
 const { headline, manifesto, definitions } = data.identity;
 ---
 
 <section class="relative border-b border-grid-line">
   <!-- Metadata Row -->
-  <div class="grid grid-cols-1 md:grid-cols-2 border-b border-grid-line divide-y md:divide-y-0 md:divide-x divide-grid-line font-mono-machine text-xs md:text-sm text-silver">
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 border-b border-grid-line divide-y md:divide-y-0 md:divide-x divide-grid-line font-mono-machine text-xs md:text-sm text-silver"
+  >
     <div class="p-4 flex items-center gap-2">
       <span class="relative flex h-2 w-2">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-volt opacity-75"></span>
+        <span
+          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-volt opacity-75"
+        ></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-volt"></span>
       </span>
       {data.metadata.status}
@@ -21,40 +25,65 @@ const { headline, manifesto, definitions } = data.identity;
 
   <!-- Headline -->
   <div class="p-6 md:p-12 lg:p-24 border-b border-grid-line">
-    <h1 class="cursor-target text-6xl md:text-8xl lg:text-9xl font-sans-heavy tracking-tighter leading-none text-bone uppercase break-words w-fit">
-      WE UNBR<span class="group relative inline-block cursor-help">O<span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-volt font-light transition-opacity duration-300 group-hover:opacity-0">Ø</span></span>L <br /> THE WEB.
+    <h1
+      class="cursor-target text-6xl md:text-8xl lg:text-9xl font-sans-heavy tracking-tighter leading-none text-bone uppercase wrap-break-word w-fit"
+    >
+      WE UNBR<span class="group relative inline-block cursor-help"
+        >O<span
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-volt font-light transition-opacity duration-300 group-hover:opacity-0"
+          >Ø</span
+        ></span
+      >L <br /> THE WEB.
     </h1>
   </div>
 
   <!-- Bottom Grid: Dictionary + Manifesto/CTA -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-grid-line">
-    
+  <div
+    class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-grid-line"
+  >
     <!-- Definitions -->
     <div class="p-6 md:p-12 space-y-8">
-      {definitions.map((def) => (
-        <div class="font-serif-human group cursor-help">
-          <p class="text-xl md:text-2xl font-bold italic text-white mb-2 group-hover:text-volt transition-colors duration-300">
-            {def.term} <span class="text-sm font-normal text-silver not-italic font-mono-machine select-none group-hover:text-bone">/{def.type}</span>
-          </p>
-          <p class="text-base text-silver leading-relaxed max-w-md group-hover:text-white transition-colors">
-            {def.definition}
-          </p>
-        </div>
-      ))}
+      {
+        definitions.map((def) => (
+          <div class="font-serif-human group cursor-help">
+            <p class="text-xl md:text-2xl font-bold italic text-white mb-2 group-hover:text-volt transition-colors duration-300">
+              {def.term}{" "}
+              <span class="text-sm font-normal text-silver not-italic font-mono-machine select-none group-hover:text-bone">
+                /{def.type}
+              </span>
+            </p>
+            <p class="text-base text-silver leading-relaxed max-w-md group-hover:text-white transition-colors">
+              {def.definition}
+            </p>
+          </div>
+        ))
+      }
     </div>
 
     <!-- Manifesto & CTA -->
     <div class="flex flex-col justify-between">
-      <div class="p-6 md:p-12 border-b lg:border-b-0 lg:border-none border-grid-line flex-grow">
-        <p class="text-2xl md:text-4xl font-sans-heavy uppercase leading-tight text-bone max-w-lg">
+      <div
+        class="p-6 md:p-12 border-b lg:border-b-0 lg:border-none border-grid-line grow"
+      >
+        <p
+          class="text-2xl md:text-4xl font-sans-heavy uppercase leading-tight text-bone max-w-lg"
+        >
           {manifesto}
         </p>
       </div>
-      
+
       <!-- CTA -->
-      <label for="toggle-contact" class="group relative block w-full p-8 md:p-12 bg-volt hover:bg-bone transition-colors duration-300 cursor-pointer border-t border-grid-line text-center lg:text-left">
-        <span class="font-mono-machine font-bold text-xl md:text-2xl tracking-tight text-black transition-colors duration-300">
-          UNBROL YOUR SITE <span class="inline-block transition-transform duration-300 group-hover:translate-x-2">-></span>
+      <label
+        for="toggle-contact"
+        class="group relative block w-full p-8 md:p-12 bg-volt hover:bg-bone transition-colors duration-300 cursor-pointer border-t border-grid-line text-center lg:text-left"
+      >
+        <span
+          class="font-mono-machine font-bold text-xl md:text-2xl tracking-tight text-black transition-colors duration-300"
+        >
+          UNBROL YOUR SITE <span
+            class="inline-block transition-transform duration-300 group-hover:translate-x-2"
+            >-></span
+          >
         </span>
       </label>
     </div>

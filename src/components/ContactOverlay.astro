@@ -1,77 +1,130 @@
 ---
+
 ---
+
 <div class="h-full w-full flex flex-col relative overflow-y-auto">
   <!-- Header / Close -->
   <div class="flex justify-between items-center p-6 border-b border-grid-line">
     <div class="font-sans-heavy text-xl text-bone">SEND SIGNAL</div>
-    <label for="toggle-contact" class="cursor-pointer group flex items-center gap-2 font-mono-machine text-xs hover:text-volt transition-colors">
+    <label
+      for="toggle-contact"
+      class="cursor-pointer group flex items-center gap-2 font-mono-machine text-xs hover:text-volt transition-colors"
+    >
       [ CLOSE X ]
     </label>
   </div>
 
-  <div class="flex-grow grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-grid-line">
+  <div
+    class="grow grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-grid-line"
+  >
     <!-- Form Section -->
     <div class="lg:col-span-2 p-6 md:p-12 lg:p-24">
-      <form action="/api/submit-form" method="POST" class="space-y-16">
-        
+      <form
+        action="/api/submit-form"
+        method="POST"
+        class="space-y-16"
+      >
         <!-- Interest Checkboxes -->
         <div class="space-y-6">
-          <label class="block font-mono-machine text-sm text-silver uppercase tracking-widest">Signal Type</label>
+          <label
+            class="block font-mono-machine text-sm text-silver uppercase tracking-widest"
+            >Signal Type</label
+          >
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {['Project', 'Partnership', 'Other'].map(type => (
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="interest" value={type.toLowerCase()} class="appearance-none w-5 h-5 border border-silver checked:bg-volt checked:border-volt transition-colors" />
-                <span class="font-serif-human text-xl group-hover:text-bone text-silver transition-colors">{type}</span>
-              </label>
-            ))}
+            {
+              ["Project", "Partnership", "Other"].map((type) => (
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    name="interest"
+                    value={type.toLowerCase()}
+                    class="appearance-none w-5 h-5 border border-silver checked:bg-volt checked:border-volt transition-colors"
+                  />
+                  <span class="font-serif-human text-xl group-hover:text-bone text-silver transition-colors">
+                    {type}
+                  </span>
+                </label>
+              ))
+            }
           </div>
         </div>
 
         <!-- Inputs -->
         <div class="space-y-12">
           <div class="group">
-            <input type="text" name="company" placeholder="Company / Entity" required 
-              class="w-full bg-transparent border-b border-grid-line py-4 text-3xl md:text-5xl font-serif-human text-bone placeholder-grid-line focus:outline-none focus:border-volt transition-colors" />
+            <input
+              type="text"
+              name="company"
+              placeholder="Company / Entity"
+              required
+              class="w-full bg-transparent border-b border-grid-line py-4 text-3xl md:text-5xl font-serif-human text-bone placeholder-grid-line focus:outline-none focus:border-volt transition-colors"
+            />
           </div>
           <div class="group">
-            <input type="email" name="email" placeholder="Email Frequency" required 
-              class="w-full bg-transparent border-b border-grid-line py-4 text-3xl md:text-5xl font-serif-human text-bone placeholder-grid-line focus:outline-none focus:border-volt transition-colors" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Frequency"
+              required
+              class="w-full bg-transparent border-b border-grid-line py-4 text-3xl md:text-5xl font-serif-human text-bone placeholder-grid-line focus:outline-none focus:border-volt transition-colors"
+            />
           </div>
           <div class="group">
-            <textarea name="message" rows="1" placeholder="Transmission..." 
-              class="w-full bg-transparent border-b border-grid-line py-4 text-3xl md:text-5xl font-serif-human text-bone placeholder-grid-line focus:outline-none focus:border-volt transition-colors resize-none"></textarea>
+            <textarea
+              name="message"
+              rows="1"
+              placeholder="Transmission..."
+              class="w-full bg-transparent border-b border-grid-line py-4 text-3xl md:text-5xl font-serif-human text-bone placeholder-grid-line focus:outline-none focus:border-volt transition-colors resize-none"
+            ></textarea>
           </div>
         </div>
 
         <!-- Submit -->
         <div class="pt-8">
-          <button type="submit" class="bg-volt text-black font-sans-heavy text-xl px-12 py-4 hover:bg-white transition-colors uppercase tracking-tight">
+          <button
+            type="submit"
+            class="bg-volt text-black font-sans-heavy text-xl px-12 py-4 hover:bg-white transition-colors uppercase tracking-tight"
+          >
             Initiate Link
           </button>
         </div>
-
       </form>
     </div>
 
     <!-- Sidebar Info -->
     <div class="p-6 md:p-12 space-y-12 h-full bg-grid-line/5">
       <div>
-        <h4 class="font-mono-machine text-xs text-silver uppercase tracking-widest mb-4">Coordinates</h4>
+        <h4
+          class="font-mono-machine text-xs text-silver uppercase tracking-widest mb-4"
+        >
+          Coordinates
+        </h4>
         <p class="font-serif-human text-xl text-bone">
-          Brussels, Belgium<br/>
+          Brussels, Belgium<br />
           (GMT+1)
         </p>
       </div>
       <div>
-        <h4 class="font-mono-machine text-xs text-silver uppercase tracking-widest mb-4">Frequency</h4>
-        <a href="mailto:hello@unbrol.com" class="font-serif-human text-xl text-bone hover:text-volt transition-colors">
+        <h4
+          class="font-mono-machine text-xs text-silver uppercase tracking-widest mb-4"
+        >
+          Frequency
+        </h4>
+        <a
+          href="mailto:hello@unbrol.com"
+          class="font-serif-human text-xl text-bone hover:text-volt transition-colors"
+        >
           hello@unbrol.com
         </a>
       </div>
-       <div>
-        <h4 class="font-mono-machine text-xs text-silver uppercase tracking-widest mb-4">Legal</h4>
+      <div>
+        <h4
+          class="font-mono-machine text-xs text-silver uppercase tracking-widest mb-4"
+        >
+          Legal
+        </h4>
         <p class="font-serif-human text-base text-silver">
-          BE 0000.000.000<br/>
+          BE 0000.000.000<br />
           Privacy Policy
         </p>
       </div>
