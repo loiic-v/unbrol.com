@@ -11,11 +11,41 @@ import { data } from "../data/content";
     <Hero />
     <Services />
 
-    <!-- Footer could be here or just a simple copyright -->
-    <footer
-      class="p-6 border-t border-grid-line font-mono-machine text-xs text-silver text-center uppercase tracking-widest"
-    >
-      &copy; UNBRØL {new Date().getFullYear()}. BRUSSELS.
+    <!-- Footer -->
+    <footer class="relative p-6 border-t border-grid-line overflow-hidden">
+      <!-- Watermark Ø -->
+      <div
+        class="absolute right-[-2%] bottom-[-40%] w-64 h-64 text-[#1a1a1a] pointer-events-none select-none z-0 opacity-50 transform rotate-12"
+      >
+        <svg
+          viewBox="0 0 100 100"
+          fill="none"
+          class="w-full h-full"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            r="32"
+            stroke="currentColor"
+            stroke-width="16"
+          ></circle>
+          <line
+            x1="20"
+            y1="80"
+            x2="80"
+            y2="20"
+            stroke="currentColor"
+            stroke-width="12"
+            stroke-linecap="square"
+          ></line>
+        </svg>
+      </div>
+
+      <div
+        class="relative z-10 font-mono-machine text-xs text-silver text-center uppercase tracking-widest"
+      >
+        &copy; UNBRØL {new Date().getFullYear()}. BRUSSELS.
+      </div>
     </footer>
   </main>
 </div>

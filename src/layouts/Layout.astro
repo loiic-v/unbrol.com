@@ -1,59 +1,100 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
-	title: string;
+  title: string;
 }
 
-import CustomCursor from '../components/CustomCursor.astro';
+import CustomCursor from "../components/CustomCursor.astro";
+import TerminalOverlay from "../components/TerminalOverlay.astro";
 const { title } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="UNBRØL - Radical Subtraction based in Brussels." />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<!-- Google Fonts -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@100..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-	</head>
-	<body class="bg-graphite text-bone font-serif-human antialiased relative overflow-x-hidden min-h-screen">
-		<CustomCursor />
-		<!-- 
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="UNBRØL - Radical Subtraction based in Brussels."
+    />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <title>{title}</title>
+    <!-- Google Fonts -->
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@100..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="bg-graphite text-bone font-serif-human antialiased relative overflow-x-hidden min-h-screen"
+  >
+    <CustomCursor />
+    <!-- 
 			ZERO-JS STATE MANAGEMENT 
 			We use hidden checkboxes and the adjacent sibling selector (~) to control global state.
 		-->
-		
-		<!-- 1. Human/Machine Mode Toggle -->
-		<input type="checkbox" id="toggle-mode" class="peer/mode hidden" />
 
-		<!-- 2. Contact Overlay Toggle -->
-		<input type="checkbox" id="toggle-contact" class="peer/contact hidden" />
+    <!-- 1. Human/Machine Mode Toggle -->
+    <input
+      type="checkbox"
+      id="toggle-mode"
+      class="peer/mode hidden"
+    />
 
-		<!-- Persistent UI (Toggle, etc.) -->
-		<slot name="ui" />
+    <!-- 2. Contact Overlay Toggle -->
+    <input
+      type="checkbox"
+      id="toggle-contact"
+      class="peer/contact hidden"
+    />
 
-		<!-- Main Content Wrapper -->
-		<div class="relative z-10 min-h-screen bg-micro-dots transition-opacity duration-300 peer-checked/mode:opacity-0 peer-checked/contact:blur-sm">
-			<slot />
-		</div>
+    <!-- Persistent UI (Toggle, etc.) -->
+    <slot name="ui" />
 
-		<!-- Machine Layer (Visible only when #toggle-mode is checked) -->
-		<div class="fixed inset-0 z-0 bg-black text-green-500 font-mono-machine p-8 overflow-auto opacity-0 pointer-events-none peer-checked/mode:opacity-100 peer-checked/mode:pointer-events-auto transition-opacity duration-300">
-			<!-- Only rendered when needed, but in Astro it's static HTML so it's always in DOM. -->
-			<slot name="machine-layer" />
-		</div>
+    <!-- Main Content Wrapper -->
+    <div
+      class="relative z-10 min-h-screen bg-micro-dots transition-opacity duration-300 peer-checked/mode:opacity-0 peer-checked/contact:blur-sm"
+    >
+      <slot />
+    </div>
 
-		<!-- Contact Overlay (Visible when #toggle-contact is checked) -->
-		<div class="fixed inset-0 z-50 transform translate-y-full peer-checked/contact:translate-y-0 transition-transform duration-500 ease-in-out bg-graphite/95 backdrop-blur-md">
-			<slot name="contact-overlay" />
-		</div>
-		
-	</body>
+    <!-- Machine Layer (Visible only when #toggle-mode is checked) -->
+    <div
+      class="fixed inset-0 z-0 bg-black text-green-500 font-mono-machine p-8 overflow-auto opacity-0 pointer-events-none peer-checked/mode:opacity-100 peer-checked/mode:pointer-events-auto transition-opacity duration-300"
+    >
+      <!-- Only rendered when needed, but in Astro it's static HTML so it's always in DOM. -->
+      <slot name="machine-layer" />
+    </div>
+
+    <!-- Contact Overlay (Visible when #toggle-contact is checked) -->
+    <div
+      class="fixed inset-0 z-50 transform translate-y-full peer-checked/contact:translate-y-0 transition-transform duration-500 ease-in-out bg-graphite/95 backdrop-blur-md"
+    >
+      <slot name="contact-overlay" />
+    </div>
+
+    <TerminalOverlay />
+  </body>
 </html>

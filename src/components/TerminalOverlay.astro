@@ -1,0 +1,158 @@
+---
+
+---
+
+<!-- Terminal Overlay -->
+<div
+  id="terminal-overlay"
+  class="fixed inset-0 z-100 bg-black text-volt font-mono-machine p-8 md:p-16 hidden flex-col font-bold leading-relaxed selection:bg-volt selection:text-black"
+>
+  <!-- CRT Scanline Effect -->
+  <div
+    class="absolute inset-0 pointer-events-none z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_2px,3px_100%]"
+  >
+  </div>
+  <div
+    class="absolute inset-0 pointer-events-none z-10 bg-black opacity-10 animate-pulse"
+  >
+  </div>
+
+  <!-- Terminal Content -->
+  <div class="relative z-20 grow flex flex-col max-w-4xl mx-auto w-full">
+    <div
+      id="terminal-history"
+      class="mb-4 whitespace-pre-wrap"
+    >
+    </div>
+
+    <div class="flex items-center">
+      <span class="mr-2 text-silver whitespace-nowrap">root@unbrol-os:~#</span>
+      <input
+        type="text"
+        id="terminal-input"
+        class="bg-transparent border-none outline-none text-volt w-full uppercase caret-volt"
+        autocomplete="off"
+        spellcheck="false"
+        autofocus
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Blink cursor animation provided by Tailwind caret or custom if needed */
+  .caret-volt {
+    caret-color: #e2ff00;
+  }
+</style>
+
+<script>
+  const terminal = document.getElementById("terminal-overlay");
+  const history = document.getElementById("terminal-history");
+  const input = document.getElementById("terminal-input") as HTMLInputElement;
+  const body = document.body;
+
+  let isBooted = false;
+
+  // Boot Sequence Text
+  const bootLines = [
+    "INITIALIZING KERNEL...",
+    "LOADING MODULES [CORE, NET, GFX]...",
+    "CHECKING INTEGRITY...",
+    "BROL DETECTED: 0%",
+    "ESTABLISHING SECURE CONNECTION...",
+    "SYSTEM READY.",
+  ];
+
+  // Functions to be exposed globally or triggered via event
+  // We'll use a custom event 'open-terminal' on document
+  document.addEventListener("open-terminal", async () => {
+    if (!terminal) return;
+    terminal.classList.remove("hidden");
+    terminal.classList.add("flex");
+    input.focus();
+
+    if (!isBooted) {
+      await runBootSequence();
+      isBooted = true;
+    }
+  });
+
+  async function runBootSequence() {
+    if (!history) return;
+    history.innerHTML = "";
+    input.disabled = true;
+
+    for (const line of bootLines) {
+      history.innerHTML += `<div>> ${line}</div>`;
+      await new Promise((r) => setTimeout(r, 150)); // Fast typing
+      // Scroll to bottom
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    history.innerHTML += `<div class="mt-4 text-silver">// Welcome to UNBRØL_OS v1.0. Type 'help' to start.</div>`;
+    input.disabled = false;
+    input.focus();
+  }
+
+  // Command Logic
+  input?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const val = input.value.trim().toLowerCase(); // Normalize
+
+      // Echo command
+      if (!history) return;
+      history.innerHTML += `<div><span class="text-silver">root@unbrol-os:~#</span> ${input.value.toUpperCase()}</div>`;
+
+      // Process
+      processCommand(val);
+
+      // Reset
+      input.value = "";
+      // Scroll
+      const container = terminal?.querySelector(".flex-col"); // fallback scroll logic
+    }
+  });
+
+  function processCommand(cmd: string) {
+    if (!history) return;
+    let response = "";
+
+    // Clean cmd
+    if (cmd === "help") {
+      response = `AVAILABLE COMMANDS:\n  - HELP\n  - WHOAMI\n  - RM -RF BROL\n  - EXIT`;
+    } else if (cmd === "whoami") {
+      response = `WE ARE THE SIGNAL.`;
+    } else if (cmd === "exit") {
+      terminal?.classList.add("hidden");
+      terminal?.classList.remove("flex");
+      return;
+    } else if (cmd === "rm -rf brol") {
+      response = `PURGING SYSTEM... OK.`;
+      // Trigger Wireframe Mode
+      history.innerHTML += `<div class="text-volt mb-4">${response}</div>`;
+      setTimeout(() => {
+        terminal?.classList.add("hidden");
+        terminal?.classList.remove("flex");
+        activateWireframeMode();
+      }, 1000);
+      return;
+    } else if (cmd === "") {
+      return;
+    } else {
+      response = `COMMAND NOT FOUND: ${cmd}`;
+    }
+
+    history.innerHTML += `<div class="text-silver mb-4">${response}</div>`;
+  }
+
+  function activateWireframeMode() {
+    // Toggle global class
+    document.documentElement.classList.add("wireframe-mode");
+
+    // Revert after 5s
+    setTimeout(() => {
+      document.documentElement.classList.remove("wireframe-mode");
+    }, 5000);
+  }
+</script>

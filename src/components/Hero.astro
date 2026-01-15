@@ -9,16 +9,21 @@ const { headline, manifesto, definitions } = data.identity;
   <div
     class="grid grid-cols-1 md:grid-cols-2 border-b border-grid-line divide-y md:divide-y-0 md:divide-x divide-grid-line font-mono-machine text-xs md:text-sm text-silver"
   >
-    <div class="p-4 flex items-center gap-2">
-      <span class="relative flex h-2 w-2">
+    <div class="p-4 md:px-12 flex items-center gap-2">
+      <p class="relative">
         <span
-          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-volt opacity-75"
-        ></span>
-        <span class="relative inline-flex rounded-full h-2 w-2 bg-volt"></span>
-      </span>
-      {data.metadata.status}
+          class="absolute top-1/2 -translate-y-1/2 right-full mr-2 flex h-2 w-2"
+        >
+          <span
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-volt opacity-75"
+          ></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-volt"
+          ></span>
+        </span>
+        {data.metadata.status}
+      </p>
     </div>
-    <div class="p-4 text-right">
+    <div class="p-4 md:px-12 text-right">
       {data.metadata.context}
     </div>
   </div>
@@ -26,16 +31,58 @@ const { headline, manifesto, definitions } = data.identity;
   <!-- Headline -->
   <div class="p-6 md:p-12 lg:p-24 border-b border-grid-line">
     <h1
-      class="cursor-target text-6xl md:text-8xl lg:text-9xl font-sans-heavy tracking-tighter leading-none text-bone uppercase wrap-break-word w-fit"
+      class="relative cursor-target text-6xl md:text-8xl lg:text-9xl font-sans-heavy tracking-tighter leading-[.9] text-bone uppercase wrap-break-word w-fit text-right"
     >
-      WE UNBR<span class="group relative inline-block cursor-help"
-        >O<span
+      WE UNBR<span
+        id="trigger-terminal"
+        class="group relative inline-block cursor-help"
+        ><span
+          class="transition-transform duration-100 ease-in-out inline-block"
+          >O</span
+        ><span
           class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-volt font-light transition-opacity duration-300 group-hover:opacity-0"
           >Ø</span
         ></span
-      >L <br /> THE WEB.
+      >L <br /> THE WEB<span
+        class="text-grid-line absolute left-full ml-0.5 bottom-0">.</span
+      >
     </h1>
   </div>
+
+  <script>
+    const trigger = document.getElementById("trigger-terminal");
+    let timer: number | undefined;
+
+    if (trigger) {
+      const startPress = (e: Event) => {
+        // Prevent ghost clicks or context menu on mobile
+        if (e.type === "touchstart") e.preventDefault();
+
+        // Visual feedback
+        trigger.classList.add("animate-pulse", "text-volt");
+
+        timer = window.setTimeout(() => {
+          document.dispatchEvent(new CustomEvent("open-terminal"));
+          resetPress();
+        }, 1000); // Reduced to 1s for easier triggering
+      };
+
+      const resetPress = () => {
+        if (timer) {
+          clearTimeout(timer);
+          timer = undefined; // Reset variable
+        }
+        trigger.classList.remove("animate-pulse", "text-volt");
+      };
+
+      trigger.addEventListener("mousedown", startPress);
+      trigger.addEventListener("touchstart", startPress, { passive: false });
+
+      trigger.addEventListener("mouseup", resetPress);
+      trigger.addEventListener("mouseleave", resetPress);
+      trigger.addEventListener("touchend", resetPress);
+    }
+  </script>
 
   <!-- Bottom Grid: Dictionary + Manifesto/CTA -->
   <div
@@ -66,9 +113,13 @@ const { headline, manifesto, definitions } = data.identity;
         class="p-6 md:p-12 border-b lg:border-b-0 lg:border-none border-grid-line grow"
       >
         <p
-          class="text-2xl md:text-4xl font-sans-heavy uppercase leading-tight text-bone max-w-lg"
+          class="text-2xl md:text-4xl font-sans-heavy uppercase leading-tight text-bone max-w-lg relative"
         >
-          {manifesto}
+          <span
+            class="text-grid-line z-0 text-[300px] leading-0 absolute top-12 -left-16 rotate-12"
+            >"</span
+          >
+          <span class="relative z-10 block -mb-0.5">{manifesto}</span>
         </p>
       </div>
 

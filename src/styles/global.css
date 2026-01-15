@@ -20,6 +20,30 @@
   background-size: 24px 24px;
 }
 
+/* UNBRØL_OS Wireframe Mode */
+html.wireframe-mode,
+html.wireframe-mode body {
+    background-color: #000 !important;
+}
+
+html.wireframe-mode * {
+    background-color: #000 !important;
+    color: #E2FF00 !important;
+    border-color: #E2FF00 !important;
+    box-shadow: none !important;
+    text-shadow: 0 0 2px #E2FF00;
+}
+
+html.wireframe-mode img, 
+html.wireframe-mode svg {
+    filter: grayscale(100%) drop-shadow(0 0 2px #E2FF00) !important;
+}
+
+html.wireframe-mode ::selection {
+    background: #E2FF00;
+    color: #000;
+}
+
 /* Base styles for the project */
 body {
   background-color: var(--color-graphite);

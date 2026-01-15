@@ -4,7 +4,7 @@
 
 <div
   id="custom-cursor"
-  class="fixed top-0 left-0 w-4 h-4 rounded-full bg-volt pointer-events-none z-9999 mix-blend-exclusion translate-x-[-50%] translate-y-[-50%] opacity-0 transition-colors duration-300"
+  class="fixed top-0 left-0 w-6 h-6 rounded-full bg-volt pointer-events-none z-9999 mix-blend-exclusion translate-x-[-50%] translate-y-[-50%] opacity-0 transition-colors duration-300"
 >
 </div>
 
@@ -53,7 +53,7 @@
         el.setAttribute("data-cursor-attached", "true");
 
         el.addEventListener("mouseenter", () => {
-          targetScale = 9; // Significantly larger for dramatic effect
+          targetScale = 6; // Significantly larger for dramatic effect
           cursor?.classList.add("mix-blend-difference", "bg-white");
           cursor?.classList.remove("bg-volt", "mix-blend-exclusion");
         });
@@ -88,7 +88,5 @@
     }
 
     animate();
-
-    // Removed cursor hiding logic to keep default cursor visible
   }
 </script>
