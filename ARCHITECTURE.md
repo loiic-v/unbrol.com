@@ -27,6 +27,7 @@ This project is optimized for [Cloudflare Pages](https://pages.cloudflare.com).
     - **Framework Preset**: `Astro`
     - **Build Command**: `npm run build`
     - **Output Directory**: `dist`
+    - **Deploy Command**: Leave empty for auto-deploy, or use `npm run deploy`.
 3.  **Environment Variables**:
     - None required for basic operation.
 
@@ -42,6 +43,7 @@ This project is optimized for [Cloudflare Pages](https://pages.cloudflare.com).
 | :---------------- | :-------------------------------------------------------------- |
 | `npm run dev`     | Starts local dev server (http://localhost:4321).                |
 | `npm run build`   | Generates production assets to `dist/`.                         |
+| `npm run deploy`  | Deploys `dist/` to Cloudflare Pages.                            |
 | `npm run preview` | Serves the `dist/` folder locally for testing production build. |
 
 ## 5. Development Notes
