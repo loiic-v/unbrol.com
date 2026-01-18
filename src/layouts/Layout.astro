@@ -1,5 +1,10 @@
 ---
 import "../styles/global.css";
+// Supports weights 100-800
+import "@fontsource-variable/jetbrains-mono";
+// Supports weights 200-800
+import "@fontsource-variable/newsreader";
+import "@fontsource/archivo-black";
 
 interface Props {
   title: string;
@@ -32,20 +37,6 @@ const { title } = Astro.props;
       content={Astro.generator}
     />
     <title>{title}</title>
-    <!-- Google Fonts -->
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@100..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body
     class="bg-graphite text-bone font-serif-human antialiased relative overflow-x-hidden min-h-screen"
