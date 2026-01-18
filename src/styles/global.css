@@ -8,8 +8,8 @@
   --color-grid-line: #262626;
 
   --font-sans-heavy: "Archivo Black", sans-serif;
-  --font-serif-human: "Newsreader Variable", serif;
-  --font-mono-machine: "JetBrains Mono Variable", monospace;
+  --font-serif-human: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono-machine: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @utility bg-micro-dots {
