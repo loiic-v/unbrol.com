@@ -1,17 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import HumanLayer from '../components/HumanLayer.astro';
-import MachineLayer from '../components/MachineLayer.astro';
-import ContactOverlay from '../components/ContactOverlay.astro';
-import ModeToggle from '../components/ModeToggle.astro';
+import Layout from "../layouts/Layout.astro";
+import HumanLayer from "../components/HumanLayer.astro";
+import MachineLayer from "../components/MachineLayer.astro";
+import ContactOverlay from "../components/ContactOverlay.astro";
+import ModeToggle from "../components/ModeToggle.astro";
 ---
 
 <Layout title="UNBRØL">
-  <ModeToggle slot="ui" />
-  
+  {
+    /*
+    <ModeToggle slot="ui" />
+    */
+  }
   <HumanLayer />
-  
   <MachineLayer slot="machine-layer" />
-  
   <ContactOverlay slot="contact-overlay" />
 </Layout>
