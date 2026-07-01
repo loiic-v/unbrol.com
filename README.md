@@ -1,4 +1,4 @@
-# UNBRØL — Radical Subtraction
+# UNBRØL – Radical Subtraction
 
 UNBRØL is a digital infrastructure entity based in Brussels. We focus on removing clutter ("brol") to deliver high-performance, strictly essential web experiences.
 

@@ -1,4 +1,4 @@
-# UNBRØL — System Architecture & Operations
+# UNBRØL – System Architecture & Operations
 
 ## 1. Core Architecture
 
