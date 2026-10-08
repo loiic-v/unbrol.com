@@ -1,47 +1,27 @@
 ---
-
+/*
+  The Brol-Switch. Flips the whole page between the human view and the
+  machine view (the raw data, as the machines read it). Fixed in the
+  nav bar's centre so it survives the human layer fading out.
+*/
 ---
 
 <label
-  for="toggle-mode"
-  class="mode-toggle-root fixed top-4 left-1/2 -translate-x-1/2 z-50 cursor-pointer group"
+  class="brol-switch fixed left-1/2 top-0 z-50 flex h-nav -translate-x-1/2 cursor-pointer items-center"
+  title="Brol-Switch: human view / machine view"
 >
-  <div
-    class="relative flex items-center bg-graphite border border-grid-line rounded-full p-1 gap-4 px-4 shadow-xl backdrop-blur-md"
+  <input
+    type="checkbox"
+    id="toggle-mode"
+    class="sr-only"
+    role="switch"
+    aria-label="Machine view"
+  />
+  <span
+    class="relative grid grid-cols-2 border border-grid-line bg-graphite font-mono-machine text-[10px] font-bold uppercase tracking-widest md:text-[11px]"
   >
-    <!-- Sliding Background (Indicator) -->
-    <div
-      class="toggle-indicator absolute left-1 top-1 bottom-1 w-[calc(50%-2px)] bg-grid-line/50 rounded-full transition-all duration-300"
-    >
-    </div>
-
-    <style>
-      /* While #toggle-mode is checked (machine mode), move the indicator */
-      /* Note: The label (.mode-toggle-root) is a sibling of the input #toggle-mode in Layout */
-      :global(#toggle-mode:checked) ~ .mode-toggle-root .toggle-indicator {
-        transform: translateX(100%);
-        background-color: var(--color-volt);
-      }
-
-      /* Text colors */
-      :global(#toggle-mode:checked) ~ .mode-toggle-root .text-machine {
-        color: #000;
-      }
-      :global(#toggle-mode:not(:checked)) ~ .mode-toggle-root .text-human {
-        color: var(--color-bone);
-      }
-    </style>
-
-    <div
-      class="relative z-10 font-mono-machine text-xs font-bold transition-colors duration-300 text-human text-silver tracking-wider"
-    >
-      HUMAN
-    </div>
-    <div class="w-px h-3 bg-grid-line"></div>
-    <div
-      class="relative z-10 font-mono-machine text-xs font-bold transition-colors duration-300 text-machine text-silver tracking-wider"
-    >
-      MACHINE
-    </div>
-  </div>
+    <span class="switch-thumb absolute inset-y-0 left-0 w-1/2" aria-hidden="true"></span>
+    <span class="switch-human relative z-10 px-3 py-1.5 transition-colors duration-300">Human</span>
+    <span class="switch-machine relative z-10 px-3 py-1.5 text-silver transition-colors duration-300">Machine</span>
+  </span>
 </label>

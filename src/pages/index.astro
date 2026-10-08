@@ -4,14 +4,11 @@ import HumanLayer from "../components/HumanLayer.astro";
 import MachineLayer from "../components/MachineLayer.astro";
 import ContactOverlay from "../components/ContactOverlay.astro";
 import ModeToggle from "../components/ModeToggle.astro";
+import { data } from "../data/content";
 ---
 
-<Layout title="UNBRØL">
-  {
-    /*
-    <ModeToggle slot="ui" />
-    */
-  }
+<Layout title={`${data.entity} – ${data.type}, ${data.location}`}>
+  <ModeToggle slot="ui" />
   <HumanLayer />
   <MachineLayer slot="machine-layer" />
   <ContactOverlay slot="contact-overlay" />

@@ -1,142 +1,140 @@
 ---
 import { data } from "../data/content";
-const { status, established, reboot } = data.metadata;
-const { headline, manifesto, definitions } = data.identity;
+
+const { status, context } = data.metadata;
+const { manifesto, definitions } = data.identity;
+const [brol, unbrol] = definitions;
+
+// "No Fluff. Radically Human. Machine Readable." -> one statement per line
+const statements = manifesto.split(/(?<=\.)\s+/);
 ---
 
-<section class="relative border-b border-grid-line">
-  <!-- Metadata Row -->
+<section class="relative overflow-clip" aria-labelledby="hero-title">
+  <!-- Meta rail -->
   <div
-    class="grid grid-cols-1 md:grid-cols-2 border-b border-grid-line divide-y md:divide-y-0 md:divide-x divide-grid-line font-mono-machine text-xs md:text-sm text-silver"
+    class="flex flex-wrap items-center justify-between gap-x-2 px-5 font-mono-machine text-[10px] uppercase tracking-wider text-silver md:grid md:grid-cols-3 md:px-0 md:text-xs"
   >
-    <div class="p-4 md:px-12 flex items-center gap-2">
-      <p class="relative">
-        <span
-          class="absolute top-1/2 -translate-y-1/2 right-full mr-2 flex h-2 w-2"
-        >
-          <span
-            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-volt opacity-75"
-          ></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-volt"
-          ></span>
-        </span>
-        {data.metadata.status}
-      </p>
-    </div>
-    <div class="p-4 md:px-12 text-right">
-      {data.metadata.context}
-    </div>
+    <p class="flex items-center gap-3 whitespace-nowrap py-3 md:px-12">
+      <span class="relative flex h-2 w-2" aria-hidden="true">
+        <span class="absolute inline-flex h-full w-full bg-volt opacity-75 motion-safe:animate-ping"></span>
+        <span class="relative inline-flex h-2 w-2 bg-volt"></span>
+      </span>
+      {status}
+    </p>
+    <p class="relative whitespace-nowrap py-3 text-right md:px-12 md:text-center">
+      <i class="rule-y hidden md:block" aria-hidden="true"></i>
+      {context}
+    </p>
+    <p class="relative hidden px-12 py-3 text-right md:block">
+      <i class="rule-y" aria-hidden="true"></i>
+      {data.location}
+    </p>
   </div>
+  <span class="rule" aria-hidden="true"></span>
 
   <!-- Headline -->
-  <div class="p-6 md:p-12 lg:p-24 border-b border-grid-line">
+  <div class="px-5 pb-12 pt-10 md:px-12 md:pb-16 md:pt-14">
     <h1
-      class="relative cursor-target text-6xl md:text-8xl lg:text-9xl font-sans-heavy tracking-tighter leading-[.9] text-bone uppercase wrap-break-word w-fit text-right"
+      id="hero-title"
+      class="hero-sink font-sans-heavy text-[clamp(3.25rem,13.2vw,15rem)] uppercase leading-[0.86] tracking-[-0.03em] text-bone"
     >
-      WE UNBR<span
-        id="trigger-terminal"
-        class="group relative inline-block cursor-help"
-        ><span
-          class="transition-transform duration-100 ease-in-out inline-block"
-          >O</span
-        ><span
-          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-volt font-light transition-opacity duration-300 group-hover:opacity-0"
-          >Ø</span
-        ></span
-      >L <br /> THE WEB<span
-        class="text-grid-line absolute left-full ml-0.5 bottom-0">.</span
-      >
+      <span class="reveal-line block">
+        <span class="block whitespace-nowrap"
+          >We unbr<span
+            id="trigger-terminal"
+            class="oslash cursor-help"
+            title="Hold to open the terminal"
+            >O<i class="slash" aria-hidden="true"></i></span
+          >l</span
+        >
+      </span>
+      <span class="reveal-line block">
+        <span class="block whitespace-nowrap">The web.</span>
+      </span>
     </h1>
+  </div>
+  <span class="rule" aria-hidden="true"></span>
+
+  <!-- Dictionary / manifesto / CTA -->
+  <div class="grid grid-cols-1 lg:grid-cols-3">
+    <!-- Definitions -->
+    <dl class="defs space-y-10 px-5 py-10 md:px-12 md:py-14">
+      <div class="def-noun">
+        <dt class="font-serif-human text-2xl font-bold italic text-bone md:text-3xl">
+          {brol.term}
+          <span class="ml-1 font-mono-machine text-xs font-normal not-italic text-silver">/{brol.type}</span>
+        </dt>
+        <dd class="mt-2 max-w-md font-serif-human text-lg leading-relaxed text-silver">
+          <span class="strike">{brol.definition}</span>
+        </dd>
+      </div>
+      <div class="def-verb cursor-help">
+        <dt class="font-serif-human text-2xl font-bold italic text-bone md:text-3xl">
+          {unbrol.term}
+          <span class="ml-1 font-mono-machine text-xs font-normal not-italic text-silver">/{unbrol.type}</span>
+        </dt>
+        <dd class="mt-2 max-w-md font-serif-human text-lg leading-relaxed text-silver">
+          {unbrol.definition}
+        </dd>
+      </div>
+    </dl>
+
+    <!-- Manifesto + CTA -->
+    <div class="relative flex flex-col lg:col-span-2">
+      <i class="rule-y hidden lg:block" aria-hidden="true"></i>
+      <span class="rule lg:hidden" aria-hidden="true"></span>
+
+      <p
+        class="grow px-5 py-10 font-sans-heavy text-[clamp(2rem,4.6vw,4.5rem)] uppercase leading-[0.95] tracking-tight text-bone md:px-12 md:py-14"
+      >
+        {statements.map((s) => <span class="lit block">{s}</span>)}
+      </p>
+
+      <span class="rule" aria-hidden="true"></span>
+
+      <label
+        for="toggle-contact"
+        class="group relative block cursor-pointer overflow-clip bg-volt px-5 py-8 md:px-12 md:py-10"
+      >
+        <span
+          class="absolute inset-0 origin-left scale-x-0 bg-bone transition-transform duration-500 ease-out-expo group-hover:scale-x-100"
+          aria-hidden="true"></span>
+        <span class="relative font-mono-machine text-xl font-bold tracking-tight text-black md:text-2xl">
+          UNBROL YOUR SITE
+          <span class="inline-block transition-transform duration-300 ease-out-expo group-hover:translate-x-2" aria-hidden="true">-&gt;</span>
+        </span>
+      </label>
+    </div>
   </div>
 
   <script>
+    // Easter egg: hold the O for a second to open the terminal.
     const trigger = document.getElementById("trigger-terminal");
     let timer: number | undefined;
 
     if (trigger) {
       const startPress = (e: Event) => {
-        // Prevent ghost clicks or context menu on mobile
         if (e.type === "touchstart") e.preventDefault();
-
-        // Visual feedback
         trigger.classList.add("animate-pulse", "text-volt");
-
         timer = window.setTimeout(() => {
           document.dispatchEvent(new CustomEvent("open-terminal"));
           resetPress();
-        }, 1000); // Reduced to 1s for easier triggering
+        }, 1000);
       };
 
       const resetPress = () => {
         if (timer) {
           clearTimeout(timer);
-          timer = undefined; // Reset variable
+          timer = undefined;
         }
         trigger.classList.remove("animate-pulse", "text-volt");
       };
 
       trigger.addEventListener("mousedown", startPress);
       trigger.addEventListener("touchstart", startPress, { passive: false });
-
       trigger.addEventListener("mouseup", resetPress);
       trigger.addEventListener("mouseleave", resetPress);
       trigger.addEventListener("touchend", resetPress);
     }
   </script>
-
-  <!-- Bottom Grid: Dictionary + Manifesto/CTA -->
-  <div
-    class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-grid-line"
-  >
-    <!-- Definitions -->
-    <div class="p-6 md:p-12 space-y-8">
-      {
-        definitions.map((def) => (
-          <div class="font-serif-human group cursor-help">
-            <p class="text-xl md:text-2xl font-bold italic text-white mb-2 group-hover:text-volt transition-colors duration-300">
-              {def.term}{" "}
-              <span class="text-sm font-normal text-silver not-italic font-mono-machine select-none group-hover:text-bone">
-                /{def.type}
-              </span>
-            </p>
-            <p class="text-base text-silver leading-relaxed max-w-md group-hover:text-white transition-colors">
-              {def.definition}
-            </p>
-          </div>
-        ))
-      }
-    </div>
-
-    <!-- Manifesto & CTA -->
-    <div class="flex flex-col justify-between lg:col-span-2">
-      <div
-        class="p-6 md:p-12 border-b lg:border-b-0 lg:border-none border-grid-line grow"
-      >
-        <p
-          class="text-2xl md:text-4xl font-sans-heavy uppercase leading-tight text-bone max-w-lg relative"
-        >
-          <span
-            class="text-grid-line z-0 text-[300px] leading-0 absolute top-12 -left-16 rotate-12"
-            >"</span
-          >
-          <span class="relative z-10 block -mb-0.5">{manifesto}</span>
-        </p>
-      </div>
-
-      <!-- CTA -->
-      <label
-        for="toggle-contact"
-        class="group relative block w-full p-8 md:p-12 bg-volt hover:bg-bone transition-colors duration-300 cursor-pointer border-t border-grid-line text-center lg:text-left"
-      >
-        <span
-          class="font-mono-machine font-bold text-xl md:text-2xl tracking-tight text-black transition-colors duration-300"
-        >
-          UNBROL YOUR SITE <span
-            class="inline-block transition-transform duration-300 group-hover:translate-x-2"
-            >-></span
-          >
-        </span>
-      </label>
-    </div>
-  </div>
 </section>
