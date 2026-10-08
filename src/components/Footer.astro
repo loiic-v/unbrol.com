@@ -1,0 +1,29 @@
+---
+import { data } from "../data/content";
+const { email, address } = data.contact;
+const year = new Date().getFullYear();
+---
+
+<footer class="relative overflow-clip" aria-label="Contact and legal">
+  <div class="grid gap-10 px-5 py-12 md:grid-cols-[1fr_auto] md:items-end md:px-12 md:py-20">
+    <a
+      href={`mailto:${email}`}
+      class="cursor-target inline-block w-fit font-sans-heavy text-[clamp(1.75rem,6vw,6.5rem)] leading-none tracking-tight text-bone underline decoration-transparent decoration-[0.06em] underline-offset-[0.14em] transition-colors duration-300 hover:decoration-volt"
+    >
+      {email}
+    </a>
+    <div class="space-y-2 font-mono-machine text-[11px] uppercase tracking-wider text-silver md:text-right md:text-xs">
+      <p>{address} (GMT+1)</p>
+      <p>&copy; {data.entity} {year}</p>
+    </div>
+  </div>
+
+  <!-- The finale: as the wordmark scrolls in, the slash leaves. We remove the obstruction. -->
+  <div class="wordmark extract select-none px-5 md:px-12" aria-hidden="true">
+    <div class="h-[0.64em] overflow-clip font-sans-heavy text-[calc((100vw-2.5rem)/4.65)] md:text-[calc((100vw-6rem)/4.65)] leading-none tracking-[-0.03em] text-bone">
+      <span class="-mt-[0.12em] block whitespace-nowrap"
+        >UNBR<span class="oslash">O<i class="slash"></i></span>L</span
+      >
+    </div>
+  </div>
+</footer>

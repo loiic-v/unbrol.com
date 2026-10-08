@@ -1,23 +1,26 @@
-# UNBRØL – Radical Subtraction
+# UNBRØL – Radical subtraction
 
 UNBRØL is a digital infrastructure entity based in Brussels. We focus on removing clutter ("brol") to deliver high-performance, strictly essential web experiences.
 
 ## Architecture
 
-This project is built on a **Zero-JS** philosophy (with progressive enhancement) for maximum performance and durability.
+This project is built on a **zero-JS** philosophy (with progressive enhancement) for maximum performance and durability.
 
-### Core Stack
+### Core stack
 
-- **Engine**: [Astro](https://astro.build) (Static Site Generation)
+- **Engine**: [Astro](https://astro.build) (static site generation)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com) (v4 with `@theme` configuration)
-- **deployment**: Cloudflare Pages
-- **Serverless**: Cloudflare Pages Functions (Form handling)
+- **Deployment**: Cloudflare Pages
+- **Serverless**: Cloudflare Pages Functions (form handling)
 
-### Key Features
+### Key features
 
-- **CSS-Driven State**: The "Human/Machine" toggle and Contact Overlay are controlled entirely via CSS Checkbox Hacks (`:checked` + `peer` selectors), requiring no client-side JavaScript for core navigation.
-- **Machine Layer**: A raw JSON view of the site's content, exposed as a secondary interface layer.
-- **Progressive Enhancement**: A custom cursor is added via vanilla JavaScript for desktop users, but the site remains fully functional without it.
+- **CSS-driven state**: the Brol-Switch (human/machine view) and the contact overlay are 2 checkboxes read with `html:has(:checked)`. No client-side JavaScript is needed for core navigation.
+- **Scroll-driven motion**: grid rules draw in, the manifesto lights up, the footer wordmark loses its slash at the end of the page. All CSS, feature-detected, off under reduced motion.
+- **Machine layer**: a raw JSON view of the site's content, exposed as a secondary interface layer.
+- **Progressive enhancement**: a custom cursor, a terminal easter egg and an inline form submit are added with vanilla JavaScript, but the site remains fully functional without them.
+
+See `ARCHITECTURE.md` for details.
 
 ## Development
 

@@ -6,10 +6,15 @@
   --color-volt: #e2ff00;
   --color-silver: #9ca3af;
   --color-grid-line: #262626;
+  --color-ash: #4a4a4a;
 
   --font-sans-heavy: "Archivo Black", sans-serif;
   --font-serif-human: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono-machine: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --spacing-nav: 3.5rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @font-face {
@@ -29,40 +34,360 @@
   background-size: 24px 24px;
 }
 
-/* UNBRØL_OS Wireframe Mode */
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    background-color: var(--color-graphite);
+    color: var(--color-bone);
+    font-family: var(--font-serif-human);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-volt);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-volt);
+    color: #000;
+  }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------ */
+  /* Nordic grid: 1px rules as elements, so they can draw themselves     */
+  /* ------------------------------------------------------------------ */
+
+  .rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: var(--color-grid-line);
+  }
+
+  .rule-y {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 1px;
+    background: var(--color-grid-line);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* The Ø: an O plus a slash. Hover extracts the slash (the brol).      */
+  /* ------------------------------------------------------------------ */
+
+  .oslash {
+    position: relative;
+    display: inline;
+  }
+
+  .oslash > .slash {
+    position: absolute;
+    left: 50%;
+    top: 49.1%;
+    width: 1.12em;
+    height: 0.09em;
+    background: var(--color-volt);
+    translate: -50% -50%;
+    rotate: -45deg;
+    pointer-events: none;
+    transition:
+      translate 0.5s var(--ease-out-expo),
+      opacity 0.35s ease;
+  }
+
+  .oslash:hover > .slash,
+  .extract:hover .slash,
+  .extract:focus-visible .slash {
+    translate: calc(-50% + 0.7em) calc(-50% - 0.7em);
+    opacity: 0;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Definitions: hovering "un-brol" ruthlessly deletes the line above   */
+  /* ------------------------------------------------------------------ */
+
+  .strike {
+    position: relative;
+    display: inline;
+    transition: color 0.3s ease;
+  }
+
+  .strike::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 55%;
+    height: 1px;
+    background: var(--color-volt);
+    scale: 0 1;
+    transform-origin: 0 50%;
+    transition: scale 0.45s var(--ease-out-expo);
+  }
+
+  .defs:has(.def-verb:hover) .def-noun .strike {
+    color: var(--color-ash);
+  }
+
+  .defs:has(.def-verb:hover) .def-noun .strike::after {
+    scale: 1 1;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Global state, driven by 2 checkboxes and :has()                     */
+  /* ------------------------------------------------------------------ */
+
+  /* Contact overlay */
+  .overlay-contact {
+    translate: 0 100%;
+    visibility: hidden;
+    transition:
+      translate 0.6s var(--ease-out-expo),
+      visibility 0s linear 0.6s;
+  }
+
+  html:has(#toggle-contact:checked) {
+    overflow: hidden;
+  }
+
+  html:has(#toggle-contact:checked) .overlay-contact {
+    translate: 0 0;
+    visibility: visible;
+    transition:
+      translate 0.6s var(--ease-out-expo),
+      visibility 0s linear 0s;
+  }
+
+  .contact-plus {
+    display: inline-block;
+    transition: rotate 0.3s var(--ease-out-expo);
+  }
+
+  html:has(#toggle-contact:checked) .contact-plus {
+    rotate: 45deg;
+  }
+
+  /* Human / machine view (the Brol-Switch) */
+  .layer-human {
+    transition:
+      opacity 0.3s ease,
+      visibility 0s linear 0s;
+  }
+
+  .layer-machine {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0s linear 0.3s;
+  }
+
+  html:has(#toggle-mode:checked) {
+    overflow: hidden;
+  }
+
+  html:has(#toggle-mode:checked) .layer-human {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0s linear 0.3s;
+  }
+
+  html:has(#toggle-mode:checked) .layer-machine {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 0.3s ease 0.1s,
+      visibility 0s linear 0s;
+  }
+
+  .switch-thumb {
+    background: var(--color-bone);
+    transition:
+      translate 0.3s var(--ease-out-expo),
+      background-color 0.3s ease;
+  }
+
+  .switch-human {
+    color: #000;
+  }
+
+  html:has(#toggle-mode:checked) .switch-thumb {
+    translate: 100% 0;
+    background: var(--color-volt);
+  }
+
+  html:has(#toggle-mode:checked) .switch-human {
+    color: var(--color-silver);
+  }
+
+  html:has(#toggle-mode:checked) .switch-machine {
+    color: #000;
+  }
+
+  .brol-switch:has(:focus-visible) {
+    outline: 2px solid var(--color-volt);
+    outline-offset: 3px;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Motion. Everything here is optional: without support, or with       */
+  /* reduced motion, every element already sits in its final state.      */
+  /* ------------------------------------------------------------------ */
+
+  .scroll-progress {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* The one page-load moment: the headline rises into place */
+    .reveal-line {
+      overflow: clip;
+      padding-top: 0.06em;
+      margin-top: -0.06em;
+    }
+
+    .reveal-line > span {
+      display: block;
+      animation: rise 1s var(--ease-out-expo) both;
+    }
+
+    .reveal-line:nth-of-type(2) > span {
+      animation-delay: 0.1s;
+    }
+
+    @keyframes rise {
+      from {
+        translate: 0 110%;
+      }
+    }
+
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      /* Where you are in the page, as a volt hairline under the nav */
+      .scroll-progress {
+        display: block;
+        transform-origin: 0 50%;
+        animation: grow-x linear both;
+        animation-timeline: scroll(root);
+      }
+
+      @keyframes grow-x {
+        from {
+          scale: 0 1;
+        }
+        to {
+          scale: 1 1;
+        }
+      }
+
+      /* The grid draws itself as it arrives */
+      .rule {
+        transform-origin: 0 50%;
+        animation: draw-x linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 30%;
+      }
+
+      @keyframes draw-x {
+        from {
+          scale: 0 1;
+        }
+      }
+
+      .rule-y {
+        transform-origin: 50% 0;
+        animation: draw-y linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 45%;
+      }
+
+      @keyframes draw-y {
+        from {
+          scale: 1 0;
+        }
+      }
+
+      /* The headline sinks as it leaves */
+      .hero-sink {
+        animation: sink linear both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+
+      @keyframes sink {
+        to {
+          translate: 0 18%;
+          opacity: 0;
+        }
+      }
+
+      /* The manifesto lights up, one statement at a time */
+      .lit {
+        animation: light linear both;
+        animation-timeline: view();
+        animation-range: entry 80% cover 42%;
+      }
+
+      @keyframes light {
+        from {
+          opacity: 0.12;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* The finale: the wordmark loses its slash as you reach the end */
+      .wordmark .slash {
+        animation: extract linear both;
+        animation-timeline: view();
+        animation-range: entry 30% entry 100%;
+      }
+
+      @keyframes extract {
+        to {
+          translate: calc(-50% + 0.7em) calc(-50% - 0.7em);
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* UNBRØL_OS wireframe mode (terminal easter egg)                      */
+/* ------------------------------------------------------------------ */
+
 html.wireframe-mode,
 html.wireframe-mode body {
-    background-color: #000 !important;
+  background-color: #000 !important;
 }
 
 html.wireframe-mode * {
-    background-color: #000 !important;
-    color: #E2FF00 !important;
-    border-color: #E2FF00 !important;
-    box-shadow: none !important;
-    text-shadow: 0 0 2px #E2FF00;
+  background-color: #000 !important;
+  color: #e2ff00 !important;
+  border-color: #e2ff00 !important;
+  box-shadow: none !important;
+  text-shadow: 0 0 2px #e2ff00;
 }
 
-html.wireframe-mode img, 
+html.wireframe-mode img,
 html.wireframe-mode svg {
-    filter: grayscale(100%) drop-shadow(0 0 2px #E2FF00) !important;
+  filter: grayscale(100%) drop-shadow(0 0 2px #e2ff00) !important;
 }
 
 html.wireframe-mode ::selection {
-    background: #E2FF00;
-    color: #000;
-}
-
-/* Base styles for the project */
-body {
-  background-color: var(--color-graphite);
-  color: var(--color-bone);
-  font-family: var(--font-serif-human);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Utility to ensure volt text is on black/graphite */
-.text-volt-on-black {
-  color: var(--color-volt);
-  background-color: var(--color-graphite); /* or black */
+  background: #e2ff00;
+  color: #000;
 }

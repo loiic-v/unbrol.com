@@ -1,42 +1,41 @@
-# UNBRØL – System Architecture & Operations
+# UNBRØL – System architecture and operations
 
-## 1. Core Architecture
+## 1. Core architecture
 
-- **Engine**: [Astro](https://astro.build) (Static Site Generation).
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com) (Alpha/Beta with `@theme` config in `src/styles/global.css`).
-- **Philosophy**: "Zero-JS" for interactions.
-  - **Human/Machine Toggle**: Controlled by `#toggle-mode` checkbox + sibling selectors (`peer-checked`).
-  - **Contact Overlay**: Controlled by `#toggle-contact` checkbox.
-  - **No Frameworks**: No React/Vue/Svelte on the client. Pure HTML/CSS.
-- **Data Source**: Single Source of Truth in `src/data/content.ts`.
+- **Engine**: [Astro](https://astro.build) (static site generation).
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com) with the `@theme` config in `src/styles/global.css`.
+- **Philosophy**: zero JS for the core experience, progressive enhancement on top.
+  - **Global state**: 2 checkboxes drive the page. `#toggle-contact` (in the nav) opens the contact overlay, `#toggle-mode` (in the Brol-Switch) flips human/machine view. `global.css` reads them with `html:has(#id:checked)`, so the inputs can live inside their visible labels and stay keyboard reachable.
+  - **Motion**: scroll effects are CSS scroll-driven animations (`animation-timeline: view()` / `scroll(root)`), gated by `@supports` and `prefers-reduced-motion`. Browsers without support (Firefox) and reduced-motion users get the final, static state. No JS fallback, by design.
+  - **No frameworks**: no React/Vue/Svelte on the client. Pure HTML/CSS.
+- **Data source**: single source of truth in `src/data/content.ts`. The machine view dumps it as tokenised JSON at build time.
 
-## 2. Build Pipeline
+## 2. Build pipeline
 
 - **Command**: `npm run build`
-- **Output**: `/dist` (Static HTML/CSS/JS assets).
-- **Adapter**: Default Static Adapter (compatible with any static host).
+- **Output**: `/dist` (static HTML/CSS/JS assets, stylesheets inlined).
+- **Adapter**: default static adapter (compatible with any static host).
 
 ## 3. Deployment (Cloudflare Pages)
 
-This project is optimized for [Cloudflare Pages](https://pages.cloudflare.com).
+This project is optimised for [Cloudflare Pages](https://pages.cloudflare.com).
 
 ### Configuration
 
-1.  **Connect Git Repo**: Select `loiic-v/unbrol.com`.
-2.  **Build Settings**:
-    - **Framework Preset**: `Astro`
-    - **Build Command**: `npm run build`
-    - **Output Directory**: `dist`
-3.  **Environment Variables**:
-    - None required for basic operation.
+1.  **Connect Git repo**: select `loiic-v/unbrol.com`.
+2.  **Build settings**:
+    - **Framework preset**: `Astro`
+    - **Build command**: `npm run build`
+    - **Output directory**: `dist`
+3.  **Environment variables**: none required for basic operation.
 
-### Serverless Functions
+### Serverless functions
 
 - **Location**: `/functions/api/submit-form.ts`
 - **Runtime**: Cloudflare Pages Functions.
-- **Behavior**: Automatically intercepts `POST` requests to `/api/submit-form`.
+- **Behaviour**: intercepts `POST` requests to `/api/submit-form` and answers JSON.
 
-## 4. Operational Scripts
+## 4. Operational scripts
 
 | Command           | Description                                                     |
 | :---------------- | :-------------------------------------------------------------- |
@@ -44,7 +43,17 @@ This project is optimized for [Cloudflare Pages](https://pages.cloudflare.com).
 | `npm run build`   | Generates production assets to `dist/`.                         |
 | `npm run preview` | Serves the `dist/` folder locally for testing production build. |
 
-## 5. Development Notes
+## 5. Client-side JavaScript (all optional)
 
-- **Custom Cursor**: Implemented as a progressive enhancement (`src/components/CustomCursor.astro`). It is the _only_ client-side JS component intended for visual flair.
-- **Tailwind v4 Reference**: Configuration is handled via CSS variables and `@theme` blocks in `global.css`, not a JS config file.
+| Component                | Enhancement                                                                                  |
+| :----------------------- | :------------------------------------------------------------------------------------------- |
+| `CustomCursor.astro`     | Volt cursor on fine pointers.                                                                |
+| `Hero.astro`             | Hold the Ø for 1 second to open the terminal.                                                |
+| `TerminalOverlay.astro`  | The terminal itself (`help`, `whoami`, `rm -rf brol`, `exit`).                               |
+| `ContactOverlay.astro`   | Escape closes, focus moves into the form, page behind is inert, submit via fetch with inline status. Without JS the form still posts to the function. |
+
+## 6. Development notes
+
+- **Rules**: section separators are `.rule` / `.rule-y` elements, not borders, so they can draw themselves on scroll. Use them for the major grid lines, borders for the rest.
+- **The Ø**: `<span class="oslash">O<i class="slash"></i></span>`. Hovering the span (or an ancestor with `.extract`) slides the slash out. The footer `.wordmark` does the same on scroll.
+- **Tailwind v4 reference**: configuration is handled via CSS variables and `@theme` blocks in `global.css`, not a JS config file.

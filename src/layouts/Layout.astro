@@ -1,36 +1,44 @@
 ---
 import "../styles/global.css";
 
+import CustomCursor from "../components/CustomCursor.astro";
+import TerminalOverlay from "../components/TerminalOverlay.astro";
+import { data } from "../data/content";
+
 interface Props {
   title: string;
 }
 
-import CustomCursor from "../components/CustomCursor.astro";
-import TerminalOverlay from "../components/TerminalOverlay.astro";
 const { title } = Astro.props;
+
+const description = `${data.entity} – ${data.identity.manifesto} ${data.type}, ${data.location}.`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "UNBROL",
+  alternateName: data.entity,
+  url: Astro.site?.href ?? "https://unbrol.com",
+  email: data.contact.email,
+  foundingDate: String(data.metadata.established),
+  description: data.identity.manifesto,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Brussels",
+    addressCountry: "BE",
+  },
+};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="UNBRØL - Radical Subtraction based in Brussels."
-    />
-    <meta
-      name="viewport"
-      content="width=device-width"
-    />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
-    />
-    <meta
-      name="generator"
-      content={Astro.generator}
-    />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#121212" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link
       rel="preload"
@@ -39,52 +47,40 @@ const { title } = Astro.props;
       type="font/woff2"
       crossorigin
     />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script defer data-domain="unbrol.com" data-site-id="gx_zzHYNT1TTi2p" src="https://ghostlyx.com/js/script.min.js"></script>
   </head>
-  <body
-    class="bg-graphite text-bone font-serif-human antialiased relative overflow-x-hidden min-h-screen"
-  >
+  <body class="relative min-h-screen overflow-x-hidden bg-graphite font-serif-human text-bone antialiased">
     <CustomCursor />
-    <!-- 
-			ZERO-JS STATE MANAGEMENT 
-			We use hidden checkboxes and the adjacent sibling selector (~) to control global state.
-		-->
 
-    <!-- 1. Human/Machine Mode Toggle -->
-    <input
-      type="checkbox"
-      id="toggle-mode"
-      class="peer/mode hidden"
-    />
+    <!--
+      Global state lives in 2 checkboxes (#toggle-contact in the nav, #toggle-mode in the
+      Brol-Switch). global.css reads them with html:has(...), so no JS is needed to
+      open the contact overlay or flip between human and machine view.
+    -->
 
-    <!-- 2. Contact Overlay Toggle -->
-    <input
-      type="checkbox"
-      id="toggle-contact"
-      class="peer/contact hidden"
-    />
-
-    <!-- Persistent UI (Toggle, etc.) -->
+    <!-- Persistent UI (Brol-Switch) -->
     <slot name="ui" />
 
-    <!-- Main Content Wrapper -->
-    <div
-      class="relative z-10 min-h-screen bg-micro-dots transition-opacity duration-300 peer-checked/mode:opacity-0 peer-checked/contact:blur-sm"
-    >
+    <!-- Human view -->
+    <div class="layer-human relative z-10 min-h-screen bg-micro-dots">
       <slot />
     </div>
 
-    <!-- Machine Layer (Visible only when #toggle-mode is checked) -->
+    <!-- Machine view: the same content, as the machines read it -->
     <div
-      class="fixed inset-0 z-0 bg-black text-green-500 font-mono-machine p-8 overflow-auto opacity-0 pointer-events-none peer-checked/mode:opacity-100 peer-checked/mode:pointer-events-auto transition-opacity duration-300"
+      class="layer-machine fixed inset-0 z-0 overflow-auto bg-black font-mono-machine"
+      aria-label="Machine view"
     >
-      <!-- Only rendered when needed, but in Astro it's static HTML so it's always in DOM. -->
       <slot name="machine-layer" />
     </div>
 
-    <!-- Contact Overlay (Visible when #toggle-contact is checked) -->
+    <!-- Contact overlay -->
     <div
-      class="fixed inset-0 z-50 transform translate-y-full peer-checked/contact:translate-y-0 transition-transform duration-500 ease-in-out bg-graphite/95 backdrop-blur-md"
+      class="overlay-contact fixed inset-0 z-50 border-t border-volt bg-graphite bg-micro-dots"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="contact-title"
     >
       <slot name="contact-overlay" />
     </div>
